@@ -1,0 +1,1115 @@
+/* =========================================================
+   BASE
+========================================================= */
+
+#tilda-ai-assistant * {
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.ai-hidden {
+    display: none !important;
+}
+
+@keyframes aiGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Пульсация свечения */
+@keyframes aiGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(236, 64, 122, 0.45), 0 0 20px rgba(236, 64, 122, 0.30), 0 0 35px rgba(236, 64, 122, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(236, 64, 122, 0.75), 0 0 35px rgba(236, 64, 122, 0.55), 0 0 65px rgba(236, 64, 122, 0.30);
+    }
+
+    100% {
+        box-shadow: 0 0 8px rgba(236, 64, 122, 0.45), 0 0 20px rgba(236, 64, 122, 0.30), 0 0 35px rgba(236, 64, 122, 0.15);
+    }
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+#ai-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+#ai-popup {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000000;
+    width: 650px;
+    max-width: calc(100vw - 30px);
+    height: 95%;
+    max-height: calc(100vh - 20px);
+    background: transparent;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.ai-header {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    background: #EC407A;
+    border-radius: 15px;
+    margin-bottom: 8px;
+}
+
+.ai-header-left {
+    min-width: 0;
+}
+
+.ai-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.ai-subtitle {
+    margin-top: 3px;
+    color: #fff;
+    opacity: .8;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.ai-header-actions {
+    display: flex;
+    gap: 6px;
+    background: #ff8db5;
+    border-radius: 50px;
+    padding: 6px;
+}
+
+.ai-header-actions button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: #f2f2f2;
+    cursor: pointer;
+    color: #222;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ai-new-chat {
+    background: #00CA48;
+}
+
+#ai-clear {
+    background: #FFC600;
+}
+
+#ai-close-button {
+    background: #FF4B59;
+}
+
+/* =========================================================
+   MODES
+========================================================= */
+
+.ai-modes {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 15px 15px 9px 15px;
+    background: #fff;
+    border-radius: 15px 15px 0 0;
+}
+
+.ai-mode {
+    border: 0.5px solid #ccc;
+    background: #fff;
+    color: #444;
+    border-radius: 7px;
+    padding: 7px 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.ai-mode.active {
+    background: #222;
+    color: #ffffff;
+    border-color: transparent;
+    font-weight: 600;
+}
+
+/* =========================================================
+   HINTS
+========================================================= */
+
+.ai-mode-hints {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 5px;
+    padding: 9px 15px 13px 15px;
+    border-bottom: 1px solid #eeeeee;
+    background: #ffffff;
+    border-radius: 0 0 15px 15px;
+    overflow-x: auto;
+    margin-bottom: 8px;
+    border-top: 1px solid #e3e3e3;
+    scrollbar-width: none; /* Firefox */
+}
+
+.ai-mode-hints::-webkit-scrollbar {
+    display: none; /* Chrome, Edge, Safari */
+}
+
+.ai-hint {
+    flex: 0 0 auto;
+    border: 0.5px solid #ccc;
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 8px 10px;
+    color: #444;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.ai-messages-area {
+    display: flex;
+    flex: 1 1 auto;
+    position: relative;
+    overflow-y: auto;
+}
+
+.ai-messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    scrollbar-width: none; /* Firefox */
+}
+
+.ai-messages::-webkit-scrollbar {
+    display: none; /* Chrome, Edge, Safari */
+}
+
+.ai-message {
+    display: flex;
+    margin-bottom: 17px;
+}
+
+.ai-message.user {
+    justify-content: flex-end;
+}
+
+.ai-message.assistant {
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ai-message-bubble {
+    max-width: 85%;
+    padding: 10px 13px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.52;
+    word-break: break-word;
+}
+
+.ai-message.user
+.ai-message-bubble {
+    background: #111111;
+    color: #ffffff;
+    border-bottom-right-radius: 5px;
+    white-space: pre-wrap;
+}
+
+.ai-message.assistant
+.ai-message-bubble {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid #e7e7e7;
+    border-bottom-left-radius: 5px;
+}
+
+/* =========================================================
+   MARKDOWN
+========================================================= */
+
+.ai-md p {
+    margin: 0 0 9px;
+}
+
+.ai-md p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-md strong {
+    font-weight: 700;
+}
+
+.ai-md em {
+    font-style: italic;
+}
+
+.ai-md ul,
+.ai-md ol {
+    margin: 7px 0 9px 20px;
+    padding: 0;
+}
+
+.ai-md li {
+    margin-bottom: 4px;
+}
+
+.ai-md h3 {
+    margin: 10px 0 6px;
+    font-size: 15px;
+}
+
+.ai-md code {
+    padding: 2px 5px;
+    border-radius: 5px;
+    background: #f1f1f1;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* =========================================================
+   MESSAGE TOOLS
+========================================================= */
+
+.ai-message-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 6px 0 0 2px;
+}
+
+.ai-message-tools button {
+    border: 0.5px solid #cccccc;
+    border-radius: 5px;
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 7px 9px;
+}
+
+.ai-message-tools button:hover {
+    color: #222222;
+}
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+.ai-typing {
+    display: flex;
+    gap: 4px;
+}
+
+.ai-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #888888;
+    animation: aiTyping 1.1s infinite;
+}
+
+.ai-typing span:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.ai-typing span:nth-child(3) {
+    animation-delay: .3s;
+}
+
+@keyframes aiTyping {
+    0%,
+    60%,
+    100% {
+        opacity: .25;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.ai-input-area {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 15px;
+}
+
+#ai-input {
+    flex: 1;
+    align-content: center;
+    min-width: 0;
+    min-height: 45px;
+    max-height: 130px;
+    resize: none;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 11px 12px 11px 45px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+#ai-input:focus {
+    border-color: #ccc;
+}
+
+.ai-tool-button {
+    flex: 0 0 45px;
+    width: 45px;
+    height: 45px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.ai-tool-button.recording {
+    background: #111111;
+    color: #ffffff;
+}
+
+#ai-send {
+    flex: 0 0 45px;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 10px;
+    background: #EC407A;
+    cursor: pointer;
+    background-image: url(https://static.tildacdn.com/tild3438-6630-4562-a565-303933663565/svg_1788732973475.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px;
+}
+
+#ai-send:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+#ai-mic {
+    background-image: url(https://static.tildacdn.com/tild3061-3765-4837-b939-306565323237/svg_1788733776887.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    border: 1.5px solid #EC407A;
+}
+
+/* =========================================================
+   ATTACHMENT
+========================================================= */
+
+.ai-attachment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #333;
+    color: #fff;
+    font-size: 12px;
+    line-height: 12px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 23px;
+    right: 15px;
+    gap: 5px;
+}
+
+.ai-attachment-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#ai-remove-attachment {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+#ai-upload {
+    position: absolute;
+    left: 2px;
+    border: none;
+    background: none;
+    background-image: url(https://static.tildacdn.com/tild3232-3739-4535-a231-333563393039/svg_1788733112286.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px;
+}
+
+/* =========================================================
+   TONE PANEL
+========================================================= */
+
+.ai-tone-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 5px;
+    padding: 15px;
+    background: #ffffff;
+    margin-top: 8px;
+    border-radius: 15px;
+}
+
+#ai-tone-toggle {
+    background: #222;
+    background-image: url(https://static.tildacdn.com/tild3739-3830-4864-b966-313863363338/svg_1788733032360.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    border: none;
+}
+
+.ai-tone-title {
+    width: 100%;
+    color: #777777;
+    font-size: 12px;
+}
+
+.ai-tone-panel button {
+    border: 0.5px solid #ccc;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #444;
+    padding: 7px 9px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.ai-tone-panel button.active {
+    background: #222;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.ai-footer {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 10px 10px;
+    background: #ffffff;
+    border-radius: 15px;
+}
+
+.ai-footer button {
+    border: none;
+    background: transparent;
+    color: #858585;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+/* =========================================================
+   MORTGAGE
+========================================================= */
+
+.ai-mortgage {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 15px;
+    background: #f5f5f5;
+    color: #333;
+    border-radius: 15px;
+    margin-bottom: 8px;
+}
+
+.ai-mortgage-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.ai-mortgage label {
+    display: block;
+    font-size: 12px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.ai-mortgage input {
+    width: 100%;
+    height: 40px;
+    display: block;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.ai-quick-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: -4px 0 15px;
+}
+
+.ai-quick-row button {
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #444;
+    padding: 6px 9px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.ai-main-action,
+.ai-secondary-action {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ai-main-action {
+    background: #EC407A;
+    color: #ffffff;
+    font-weight: 600;
+    height: 45px;
+}
+
+.ai-secondary-action {
+    margin-top: 9px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    color: #222222;
+}
+
+.ai-mortgage-result {
+    margin-top: 15px;
+}
+
+.ai-result-card {
+    background: #ffffff;
+    border: 0.5px solid #ccc;
+    border-radius: 10px;
+    padding: 20px 15px;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 300;
+}
+
+.ai-result-main {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.ai-result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-top: 1px solid #eeeeee;
+    font-size: 12px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 2000px) {
+    
+    #ai-overlay {
+        background: #f7f7f7;
+    }
+
+    #ai-popup {
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: auto;
+        min-width: 100%;
+        max-width: none;
+        height: stretch;
+        min-height: 100%;
+        max-height: none;
+        border-radius: 0;
+    }
+    
+    .ai-header {
+        height: 90px;
+        padding: 15px 15px;
+        margin-bottom: 0;
+        border-radius: 0;
+        background: #f7f7f7;
+    }
+    
+    .ai-title {
+        padding-left: 50px;
+        font-family: 'Arial', sans-serif;
+        font-size: 20px;
+        line-height: 40px;
+        font-weight: 600;
+        color: #222;
+        background-image: url(https://static.tildacdn.com/tild6436-6363-4932-a364-373565383233/Group_127.png);
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    
+    .ai-subtitle {
+        display: none;
+    }
+    
+    .ai-header-actions {
+        gap: 10px;
+        background: #FAFBFB;
+        padding: 10px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+    }
+    
+    .ai-header-actions button {
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        background: transparent;
+    }
+    
+    #ai-new-chat {
+        background: transparent;
+        background-image: url(https://static.tildacdn.com/tild3933-3630-4064-a565-613835363261/add-circle-svgrepo-c.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 25px;
+        opacity: .8;
+    }
+    
+    #ai-clear {
+        background: transparent;
+        background-image: url(https://static.tildacdn.com/tild6235-6434-4564-b337-396566646664/trash-bin-minimalist.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 25px;
+        opacity: .8;
+    }
+    
+    #ai-close-button {
+        background: transparent;
+        background-image: url(https://static.tildacdn.com/tild6366-6131-4234-b031-323038376363/close-circle-svgrepo.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 25px;
+        opacity: .8;
+    }
+    
+    .ai-modes {
+        margin: 0 15px;
+        padding: 5px;
+        border-radius: 25px 25px 0 0;
+        gap: 1px;
+        border: 0.5px solid #e1e1e1;
+        border-bottom: none;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+        background: #fcfcfc;
+        flex-wrap: nowrap;
+        flex: 0 0 auto;
+        overflow: hidden;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    
+    .ai-modes::-webkit-scrollbar {
+        display: none; /* Chrome, Edge, Safari */
+    }
+
+    .ai-mode {
+        flex: 0 0 auto;
+        font-size: 15px;
+        padding: 8px 15px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 400;
+        background: transparent;
+    }
+    
+    .ai-mode.active {
+        background: #e7e7e7;
+        color: #000;
+        font-weight: 500;
+    }
+    
+    .ai-mode-hints {
+        margin: 0 15px;
+        padding: 5px 10px 10px;
+        border-radius: 0 0 25px 25px;
+        gap: 3px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+        background: #fcfcfc;
+        flex-wrap: wrap;
+    }
+    
+    .ai-hint {
+        width: 49%;
+        border: none;
+        font-size: 14px;
+        background: transparent;
+        padding: 8px;
+        color: #222;
+        text-decoration: dashed;
+        text-decoration-color: #999;
+        text-decoration-line: underline;
+    }
+    
+    .ai-messages-area {
+        margin: 10px 15px;
+        border-radius: 25px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+        background: #fcfcfc;
+    }
+    
+    .ai-messages {
+        margin: 0;
+        padding: 12px;
+        background: #fcfcfc;
+    }
+    
+    .ai-message:last-child {
+        margin-bottom: 0;
+    }
+    
+    .ai-message.assistant .ai-message-bubble {
+        background: #eee;
+        color: #000;
+        border: 1px solid #e7e7e7;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .ai-message.user .ai-message-bubble {
+        background: #ec407a;
+        color: #ffffff;
+        font-weight: 450;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .ai-message-bubble {
+        max-width: 85%;
+        font-size: 15px;
+        border-radius: 15px;
+    }
+    
+    .ai-message-tools {
+        margin: 8px 0 0 2px;
+    }
+    
+    .ai-message-tools button {
+        border-radius: 25px;
+        font-size: 14px;
+        padding: 8px 12px;
+        padding-left: 32px;
+        color: #000;
+    }
+    
+    .ai-message-tools button:nth-child(1) {
+        background-image: url(https://static.tildacdn.com/tild3265-3330-4665-b436-303539646336/copy-svgrepo-com.svg);
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+    }
+    
+    .ai-message-tools button:nth-child(2) {
+        background-image: url(https://static.tildacdn.com/tild3339-6637-4534-b865-373639366436/refresh-svgrepo-com.svg);
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        background-size: 18px;
+    }
+    
+    .ai-message-tools button:nth-child(3) {
+        background-image: url(https://static.tildacdn.com/tild6233-6532-4838-b865-353235353362/chat-round-dots-svgr.svg);
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        background-size: 18px;
+    }
+    
+    .ai-message-tools button:nth-child(4) {
+        background-image: url(https://static.tildacdn.com/tild6164-3337-4437-a334-316234643132/chat-round-line-svgr.svg);
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        background-size: 18px;
+    }
+    
+    .ai-message-tools button:nth-child(5) {
+        background-image: url(https://static.tildacdn.com/tild3030-3333-4836-b630-363763613336/user-svgrepo-com.svg);
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        background-size: 18px;
+    }
+    
+    .ai-mortgage {
+        border-radius: 25px;
+        padding: 20px;
+        background: #fcfcfc;
+        margin: 10px 15px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+    }
+    
+    .ai-mortgage label {
+        font-size: 14px;
+        font-weight: 400;
+        color: #777;
+        margin-bottom: 15px;
+    }
+    
+    .ai-mortgage input {
+        height: 45px;
+        margin-top: 6px;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+    }
+    
+    .ai-quick-row button {
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        background: transparent;
+        color: #777;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .ai-main-action {
+        height: 50px;
+        margin-top: 10px;
+    }
+
+    .ai-mortgage-result {
+        margin-top: 25px;
+    }
+    
+    .ai-result-card {
+        border-radius: 15px;
+        padding: 20px 15px 5px 15px;
+    }
+    
+    .ai-result-row {
+        padding: 8px 0;
+        font-size: 13px;
+    }
+    
+    .ai-secondary-action {
+        margin-top: 10px;
+        background: #222;
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        height: 50px;
+    }
+    
+    .ai-input-area {
+        background: #f7f7f7;
+        margin: 0 15px;
+        padding: 0;
+        padding-bottom: 20px;
+        gap: 3px;
+    }
+    
+    #ai-upload {
+        position: relative;
+        left: 0;
+        background: #FAFBFB;
+        background-image: url(https://static.tildacdn.com/tild3562-3533-4762-b836-396236663034/paperclip-svgrepo-co.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 23px;
+        padding: 0;
+        border-radius: 50px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+    }
+    
+    #ai-input {
+        min-height: 45px;
+        position: relative;
+        background: #FAFBFB;
+        padding: 0 15px;
+        border-radius: 50px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+        font-size: 15px;
+    }
+    
+    #ai-tone-toggle {
+        background: transparent;
+        background-image: url(https://static.tildacdn.com/tild3561-3365-4330-b935-623464353434/face-scan-circle-svg.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 26px;
+        position: absolute;
+        right: 5px;
+    }
+    
+    .ai-tool-button {
+        flex: 0 0 45px;
+        width: 45px;
+        height: 45px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    
+    #ai-mic {
+        background: #FAFBFB;
+        background-image: url(https://static.tildacdn.com/tild6461-6266-4331-a262-313235333662/microphone-svgrepo-c.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 26px;
+        padding: 0;
+        border-radius: 50px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+    }
+    
+    #ai-send {
+        flex: 0 0 45px;
+        width: 45px;
+        height: 45px;
+        background: #EC407A;
+        background-image: url(https://static.tildacdn.com/tild6462-3731-4462-a237-316637616336/forward-1-svgrepo-co.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 26px;
+        padding: 0;
+        border-radius: 50px;
+        border: 0.5px solid #e1e1e1;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+    }
+
+    .ai-tone-panel {
+        gap: 6px;
+        padding: 0;
+        margin: 0 15px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-radius: 0;
+        background: #f7f7f7;
+    }
+
+    .ai-tone-title {
+        display: none;
+    }
+    
+    .ai-tone-panel button {
+        border-radius: 25px;
+        padding: 8px 15px;
+        font-size: 15px;
+        color: #222;
+        box-shadow: 0px 0px 3px -2px rgba(34, 60, 80, 0.5);
+        border: 0.5px solid #e1e1e1;
+        background: #FAFBFB;
+        font-weight: 400;
+    }
+    
+    .ai-tone-panel button.active {
+        background: #222;
+        color: #fff;
+        font-weight: 500;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    #ai-overlay {
+        background: rgba(0, 0, 0, .5);
+    }
+    
+    #ai-popup {
+        right: 10px;
+        left: auto;
+        bottom: 10px;
+        width: 40%;
+        min-width: 40%;
+        max-width: none;
+        height: 98%;
+        min-height: 98%;
+        max-height: none;
+        background: #f7f7f7;
+        border-radius: 25px;
+        overflow: hidden;
+    }
+}
