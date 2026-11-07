@@ -1,0 +1,109 @@
+<div id="tilda-ai-assistant">
+
+    <div id="ai-overlay" class="ai-hidden"></div>
+    
+    <div id="ai-popup" class="ai-hidden">
+        <div class="ai-header">
+            <div class="ai-header-left">
+                <div class="ai-title">AI-помощник</div>
+                <div id="ai-context-label" class="ai-subtitle">Персональный помощник УРБАН ЭСТЕЙТ</div>
+            </div>
+
+            <div class="ai-header-actions">
+                <button id="ai-new-chat" type="button" title="Новая переписка"></button>
+                <button id="ai-clear" type="button"></button>
+                <button id="ai-close-button" type="button" title="Закрыть"></button>
+            </div>
+        </div>
+
+        <div class="ai-modes">
+            <button class="ai-mode active" data-mode="general">💬 Общий</button>
+            <button class="ai-mode" data-mode="property">🏠 Объект</button>
+            <button class="ai-mode" data-mode="client">👤 Клиент</button>
+            <button class="ai-mode" data-mode="telegram">📢 Соцсети</button>
+            <button class="ai-mode" data-mode="comparison">📊 Сравнение</button>
+            <button class="ai-mode" data-mode="mortgage">💰 Ипотека</button>
+        </div>
+
+        <div id="ai-mode-hints" class="ai-mode-hints"></div>
+
+        <div class="ai-messages-area">
+            <div id="ai-messages" class="ai-messages"></div>
+
+            <div id="ai-attachment" class="ai-attachment ai-hidden">
+                <span id="ai-attachment-name"></span>
+                <button id="ai-remove-attachment" type="button">×</button>
+            </div>
+        </div>
+
+        <div id="ai-mortgage" class="ai-mortgage ai-hidden">
+            <div class="ai-mortgage-title">Ипотечный калькулятор</div>
+            <label>
+                Стоимость квартиры
+                <input id="mortgage-price" type="number" min="0" placeholder="8 000 000">
+            </label>
+
+            <label>
+                Первоначальный взнос
+                <input id="mortgage-down" type="number" min="0" placeholder="2 000 000">
+            </label>
+
+            <div class="ai-quick-row">
+                <button data-down-percent="10" type="button">10%</button>
+                <button data-down-percent="20" type="button">20%</button>
+                <button data-down-percent="30" type="button">30%</button>
+                <button data-down-percent="40" type="button">40%</button>
+            </div>
+
+            <label>
+                Процентная ставка, %
+                <input id="mortgage-rate" type="number" min="0" max="100" step="0.01" placeholder="6">
+            </label>
+
+            <label>
+                Срок, лет
+                <input id="mortgage-years" type="number" min="1" max="50" placeholder="20">
+            </label>
+            
+            <div class="ai-quick-row">
+                <button data-years="10" type="button">10 лет</button>
+                <button data-years="15" type="button">15 лет</button>
+                <button data-years="20" type="button">20 лет</button>
+                <button data-years="25" type="button">25 лет</button>
+                <button data-years="30" type="button">30 лет</button>
+            </div>
+            
+            <button id="mortgage-calculate" type="button" class="ai-main-action">Рассчитать</button>
+            
+            <div id="mortgage-result" class="ai-mortgage-result"></div>
+            
+            <button id="mortgage-send-ai" type="button" class="ai-secondary-action ai-hidden">Объяснить расчёт через AI</button>
+        </div>
+
+        <div id="ai-input-area" class="ai-input-area">
+            <button id="ai-upload" type="button" class="ai-tool-button" title="Загрузить изображение"></button>
+            <input id="ai-file" type="file" accept="image/*" hidden>
+            
+            <div class="ai-attachment-group">
+                <textarea id="ai-input" rows="1" placeholder="Напишите запрос..."></textarea>
+                <button id="ai-tone-toggle" type="button" class="ai-tool-button" title="Тон ответа ассистента"></button>
+            </div>
+
+            <button id="ai-mic" type="button" class="ai-tool-button" title="Голосовой ввод"></button>
+            
+            <button id="ai-send" type="button"></button>
+
+        </div>
+
+        <div id="ai-tone-panel" class="ai-tone-panel ai-hidden">
+            <div class="ai-tone-title">Тон ответа:</div>
+            <button data-tone="default">Обычный</button>
+            <button data-tone="business">Деловой</button>
+            <button data-tone="friendly">Дружелюбный</button>
+            <button data-tone="selling">Продающий</button>
+            <button data-tone="premium">Премиальный</button>
+            <button data-tone="simple">Проще</button>
+        </div>
+
+    </div>
+</div>
